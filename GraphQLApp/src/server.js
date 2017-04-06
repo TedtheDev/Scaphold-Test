@@ -2,6 +2,7 @@ import express from 'express';
 import graphqlHTTP from 'express-graphql';
 import resolverMap from './data/resolvers';
 import { makeExecutableSchema } from 'graphql-tools';
+import startDB from '../mongodb/connection/mongoconnection';
 import fs from 'fs';
 import path from 'path';
 
@@ -20,6 +21,8 @@ const MySchema = makeExecutableSchema({
  */
 const app = express();
 const PORT = 4000;
+
+startDB();
 app.use('/graphql', graphqlHTTP({
   schema: MySchema,
   graphiql: true
