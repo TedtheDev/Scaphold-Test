@@ -26,7 +26,6 @@ const MySchema = makeExecutableSchema({
 const app = express();
 const PORT = 4000;
 
-startDB();
 app.use('/graphql', graphqlHTTP({
   schema: MySchema,
   graphiql: true
