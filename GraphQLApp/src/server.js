@@ -1,12 +1,16 @@
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
-import resolverMap from './data/resolvers';
+import resolverMap from '../graph/resolvers';
 import { makeExecutableSchema } from 'graphql-tools';
 import startDB from '../mongodb/connection/mongoconnection';
 import fs from 'fs';
 import path from 'path';
+import mongoose from 'mongoose';
 
-const schema = fs.readFileSync(path.join(__dirname, 'data/schema.graphql')).toString();
+mongoose.Promise = global.Promise;
+startDB('scaphold-test');
+
+const schema = fs.readFileSync(path.join(__dirname, '../graph/schema.graphql')).toString();
 
 /**
  * makeExecutableSchema takes your type definitions and field resolvers and returns a GraphQLSchema

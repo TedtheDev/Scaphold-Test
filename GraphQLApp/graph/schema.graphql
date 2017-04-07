@@ -1,0 +1,20 @@
+type Person {
+  _id: String
+  name: String
+  city: String
+  state: String
+  avgHoursPerWeek: Int
+  username: String
+  favoriteTank: String
+  _v: Int
+}
+
+type Query {
+  persons: [Person]
+}
+
+
+
+schema {
+  query: Query
+}

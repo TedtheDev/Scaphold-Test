@@ -8,7 +8,7 @@ const PersonSchema = new Schema({
   avgHoursPerWeek: Number,
   username: String,
   favoriteTank: String
-});
+}, { collection: 'people' });
 
 const Person = mongoose.model('person', PersonSchema);
 
