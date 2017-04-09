@@ -1,3 +1,5 @@
+'use strict';
+
 const Person = require('../mongodb/models/person');
 const axios = require('axios');
 if(process.env.WARGAMING_API_KEY)

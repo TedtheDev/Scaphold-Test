@@ -1,3 +1,4 @@
+'use strict';
 const mongoose = require('mongoose');
 if(process.env.MONGODB_URI)
   const creds = require('../../creds/creds');
