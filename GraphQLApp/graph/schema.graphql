@@ -1,3 +1,4 @@
+
 type Person {
   name: String
   city: String
@@ -9,6 +10,7 @@ type Person {
 
 type Query {
   persons: [Person]
+  players(nickname: String!): [Player]
 }
 
 type Mutation {
@@ -20,6 +22,15 @@ type Mutation {
     username: String!
     favoriteTank: String!
   ): Person
+  deletePerson (
+    name: String!
+    username: String!
+  ): Person
+}
+
+type Player {
+  account_id: Int,
+  nickname: String!,
 }
 
 schema {
