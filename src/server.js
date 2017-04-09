@@ -8,8 +8,8 @@ import fs from 'fs';
 import path from 'path';
 import mongoose from 'mongoose';
 
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 4000;
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+const server_port = process.env.PORT || 4000;
+//var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 mongoose.Promise = global.Promise;
 if(process.env.OPENSHIFT_NODEJS_PORT && process.env.OPENSHIFT_NODEJS_IP)
@@ -37,5 +37,5 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true
 }));
 app.listen(server_port, server_ip_address, () => {
-  console.log(`App listening on port: ${server_port} and IP ${server_ip_address}`);
+  console.log(`App listening on port: ${server_port}`);
 });
