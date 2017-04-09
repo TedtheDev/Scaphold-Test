@@ -1,1 +1,3 @@
+node_modules
+/creds
 npm-debug.log

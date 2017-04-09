@@ -7,8 +7,14 @@ import fs from 'fs';
 import path from 'path';
 import mongoose from 'mongoose';
 
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 4000;
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+
 mongoose.Promise = global.Promise;
-startDB('scaphold-test');
+if(process.env.OPENSHIFT_NODEJS_PORT && process.env.OPENSHIFT_NODEJS_IP)
+  startDB('scapholdgraphql')
+else
+  startDB('scaphold-test');
 
 const schema = fs.readFileSync(path.join(__dirname, '../graph/schema.graphql')).toString();
 
@@ -24,12 +30,11 @@ const MySchema = makeExecutableSchema({
  * A simple express app that takes our GraphQL schema and serves its API.
  */
 const app = express();
-const PORT = 4000;
 
 app.use('/graphql', graphqlHTTP({
   schema: MySchema,
   graphiql: true
 }));
-app.listen(PORT, () => {
-  console.log(`App listening on port: ${PORT}`);
+app.listen(server_port, server_ip_address, () => {
+  console.log(`App listening on port: ${server_port} and IP ${server_ip_address}`);
 });
