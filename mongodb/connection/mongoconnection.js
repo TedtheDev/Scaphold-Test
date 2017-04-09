@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-if(!process.env.MONGODB_URI)
+if(process.env.MONGODB_URI)
   const creds = require('../../creds/creds');
 
 const startDB = (database) => {

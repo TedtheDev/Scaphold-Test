@@ -1,6 +1,6 @@
 const Person = require('../mongodb/models/person');
 const axios = require('axios');
-if(!process.env.WARGAMING_API_KEY)
+if(process.env.WARGAMING_API_KEY)
   const api = require('../creds/apikey')
 else
   const api = process.env.WARGAMING_API_KEY
