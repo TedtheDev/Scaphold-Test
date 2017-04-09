@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node src/server.js --presets es2015"
+    "start": "node --harmonay src/server.js",
+    "_start": "nodemon --exec \"babel-node ./src/server.js --presets es2015\""
   },
   "author": "Michael Paris",
   "license": "ISC",

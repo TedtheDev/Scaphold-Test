@@ -3,11 +3,11 @@
 const Person = require('../mongodb/models/person');
 const axios = require('axios');
 if(process.env.WARGAMING_API_KEY)
-  const api = require('../creds/apikey')
+  var api = process.env.WARGAMING_API_KEY
 else
-  const api = process.env.WARGAMING_API_KEY
+  var api = require('../creds/apikey')
 
-const API_KEY = api.key;
+const API_KEY = (!process.env.WARGAMING_API_KEY) ? api.key : api;
 const API_ROOT = 'https://api.worldoftanks.com/wot/account/list/?';
 const APPLICATION_ID = `application_id=${API_KEY}&`;
 const TYPES = 'type=startswith&language=en';

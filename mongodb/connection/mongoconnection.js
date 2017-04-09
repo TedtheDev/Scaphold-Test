@@ -1,7 +1,7 @@
 'use strict';
 const mongoose = require('mongoose');
-if(process.env.MONGODB_URI)
-  const creds = require('../../creds/creds');
+if(!process.env.MONGODB_URI)
+  var creds = require('../../creds/creds');
 
 const startDB = (database) => {
   if(!process.env.MONGODB_URI)
