@@ -9,8 +9,16 @@ type Person {
 }
 
 type Query {
-  persons: [Person]
+  persons(
+    name: String
+    username: String
+  ): [Person]
   players(nickname: String!): [Player]
+  getPlayerFavTankStats(
+    name: String!
+    username: String!
+    favoriteTank: String!
+  ): PlayerStats
 }
 
 type Mutation {
@@ -26,11 +34,48 @@ type Mutation {
     name: String!
     username: String!
   ): Person
+  updatePerson(
+    targetName: String!
+    targetUsername: String!
+    name: String
+    city: String
+    state: String
+    avgHoursPerWeek: Int
+    username: String
+    favoriteTank: String
+  ): Person
 }
 
 type Player {
   account_id: Int,
   nickname: String!,
+}
+
+type PlayerStats {
+  spotted: String
+  avg_damage_blocked: String
+  capture_points: String
+  explosion_hits: String
+  piercings: String
+  xp: String
+  survived_battles: String
+  dropped_capture_points: String
+  damage_dealt: String
+  hits_percents: String
+  draws: String
+  battles: String
+  damage_received: String
+  frags: String
+  direct_hits_received: String
+  hits: String
+  battle_avg_xp: String
+  wins: String
+  losses: String
+  piercings_received: String
+  no_damage_direct_hits_received: String
+  shots: String
+  explosion_hits_received: String
+  tanking_factor: String
 }
 
 schema {
