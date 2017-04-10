@@ -24,7 +24,8 @@ const API_TANKS_BY_PLAYER_SEARCH = '/account/tanks/?fields=tank_id&language=en&a
 //get all vehicle names
 const API_GET_TANKS_NAME = '/encyclopedia/vehicles/?fields=name,tank_id&language=en';
 
-const API_GET_FAV_TANK_STATS = '/tanks/stats/?account_id=1005863017&fields=all&language=en&tank_id=';
+const API_GET_FAV_TANK_STATS = '/tanks/stats/?fields=all&language=en&tank_id=';
+
 
 const resolverMap = {
   Query: {
@@ -67,10 +68,8 @@ const resolverMap = {
                 return tank.name
               })
               theTanksList = lo.invert(theTanksList);
-
-              axios.get(`${API_ROOT}${API_GET_FAV_TANK_STATS}${theTanksList[args.favoriteTank]}${APPLICATION_ID}`)
+              axios.get(`${API_ROOT}${API_GET_FAV_TANK_STATS}${theTanksList[args.favoriteTank]}&account_id=${accountId.data.data[0].account_id}${APPLICATION_ID}`)
                 .then((favTankData) => {
-                  console.log(favTankData.data.data[Object.keys(favTankData.data.data)[0]][0].all);
                   resolve(favTankData.data.data[Object.keys(favTankData.data.data)[0]][0].all);
                 })
             })
