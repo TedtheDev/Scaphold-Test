@@ -72,9 +72,15 @@ const resolverMap = {
                 .then((favTankData) => {
                   resolve(favTankData.data.data[Object.keys(favTankData.data.data)[0]][0].all);
                 })
+                .catch((err) => { reject(err); })
             })
-        });
+            .catch((err) => { reject(err); })
+        })
+        .catch((err) => { reject(err);})
       })
+    },
+    getPlayerAndStats(_, args) {
+
     }
   },
   Mutation: {
