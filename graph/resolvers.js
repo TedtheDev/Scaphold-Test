@@ -54,12 +54,11 @@ const resolverMap = {
         return new Promise((resolve, reject) => {
           Person.find(findParams)
             .then((thepersons) => {
-              let personsAndStats = [];
-              console.log(thepersons.length);
               if(thepersons.length === 0)
                 reject('No One Found');
+              console.log(thepersons.length);
+              let personsAndStats = [];
               for(let i = 0; i < thepersons.length; i++) {
-                console.log('start of for loop' + i);
                 axios.get(`${API_ROOT}${API_PLAYER_SEARCH}${thepersons[i].username}${APPLICATION_ID}`) //get player account_id
                 .then((accountId) => {
                   axios.get(`${API_ROOT}${API_GET_TANKS_NAME}${APPLICATION_ID}`)
@@ -70,7 +69,13 @@ const resolverMap = {
                       theTanksList = lo.invert(theTanksList);
                       axios.get(`${API_ROOT}${API_GET_FAV_TANK_STATS}${theTanksList[thepersons[i].favoriteTank]}&account_id=${accountId.data.data[0].account_id}${APPLICATION_ID}`)
                         .then((favTankData) => {
-                          console.log(favTankData.data.data)
+                          let tankData = null;
+                          if(favTankData !== null && favTankData !== undefined)
+                            if(favTankData.data !== null && favTankData.data !== undefined)
+                              if(favTankData.data.data !== null && favTankData.data.data !== undefined)
+                                if(favTankData.data.data[Object.keys(favTankData.data.data)[0]] !== null && favTankData.data.data[Object.keys(favTankData.data.data)[0]] !== undefined)
+                                  if(favTankData.data.data[Object.keys(favTankData.data.data)[0]][0] !== null)
+                                    tankData = favTankData.data.data[Object.keys(favTankData.data.data)[0]][0].all
                           let theData = {
                               "name": thepersons[i].name,
                               "city": thepersons[i].city,
@@ -78,12 +83,12 @@ const resolverMap = {
                               "avgHoursPerWeek": thepersons[i].avgHoursPerWeek,
                               "username": thepersons[i].username,
                               "favoriteTank": thepersons[i].favoriteTank,
-                              "favoriteTankStats": (favTankData.data.data !== null && favTankData.data.data[Object.keys(favTankData.data.data)[0]] !== null && favTankData.data.data[Object.keys(favTankData.data.data)[0]] !== undefined && favTankData.data.data[Object.keys(favTankData.data.data)[0]][0] !== null) ? favTankData.data.data[Object.keys(favTankData.data.data)[0]][0].all : null
+                              "favoriteTankStats": tankData
                           }
-                          console.log(theData)
                           personsAndStats.push(theData);
-                          if(i === thepersons.length - 1)
+                          if(thepersons.length === personsAndStats.length) {
                             resolve(personsAndStats);
+                          }
                         })
                         .catch((err) => { reject(err); })
                     })
