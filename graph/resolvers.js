@@ -44,19 +44,56 @@ const resolverMap = {
         .catch((err) => reject(err));
       });
     },
-    players(_, args) {
-      return new Promise((resolve, reject) => {
-        let url;
-        if(args.nickname !== null || args.nickname !== undefined)
-          url = `${API_ROOT}${API_PLAYER_SEARCH}${args.nickname}${APPLICATION_ID}`;
-        else
-          reject('Nickname is required');
-        axios.get(url)
-          .then((players) => {
-            resolve(players.data.data);
+    getPersonsAndFavTank(_, args) {
+        const findParams = {};
+        const {name, username } = args;
+        if(name)
+          findParams["name"] = name;
+        if(username)
+          findParams["username"] = username;
+        return new Promise((resolve, reject) => {
+          Person.find(findParams)
+            .then((thepersons) => {
+              let personsAndStats = [];
+              console.log(thepersons.length);
+              if(thepersons.length === 0)
+                reject('No One Found');
+              for(let i = 0; i < thepersons.length; i++) {
+                console.log('start of for loop' + i);
+                axios.get(`${API_ROOT}${API_PLAYER_SEARCH}${thepersons[i].username}${APPLICATION_ID}`) //get player account_id
+                .then((accountId) => {
+                  axios.get(`${API_ROOT}${API_GET_TANKS_NAME}${APPLICATION_ID}`)
+                    .then((tankIds) => {
+                      let theTanksList = lo.mapValues(tankIds.data.data, (tank) => {
+                        return tank.name
+                      })
+                      theTanksList = lo.invert(theTanksList);
+                      axios.get(`${API_ROOT}${API_GET_FAV_TANK_STATS}${theTanksList[thepersons[i].favoriteTank]}&account_id=${accountId.data.data[0].account_id}${APPLICATION_ID}`)
+                        .then((favTankData) => {
+                          console.log(favTankData.data.data)
+                          let theData = {
+                              "name": thepersons[i].name,
+                              "city": thepersons[i].city,
+                              "state": thepersons[i].state,
+                              "avgHoursPerWeek": thepersons[i].avgHoursPerWeek,
+                              "username": thepersons[i].username,
+                              "favoriteTank": thepersons[i].favoriteTank,
+                              "favoriteTankStats": (favTankData.data.data !== null && favTankData.data.data[Object.keys(favTankData.data.data)[0]] !== null && favTankData.data.data[Object.keys(favTankData.data.data)[0]] !== undefined && favTankData.data.data[Object.keys(favTankData.data.data)[0]][0] !== null) ? favTankData.data.data[Object.keys(favTankData.data.data)[0]][0].all : null
+                          }
+                          console.log(theData)
+                          personsAndStats.push(theData);
+                          if(i === thepersons.length - 1)
+                            resolve(personsAndStats);
+                        })
+                        .catch((err) => { reject(err); })
+                    })
+                    .catch((err) => { reject(err); })
+                })
+                .catch((err) => { reject(err);})
+              } //end of for loop
           })
           .catch((err) => reject(err));
-      })
+        });
     },
     getPlayerFavTankStats(_, args) {
       return new Promise((resolve,reject) => {

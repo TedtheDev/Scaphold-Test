@@ -8,18 +8,32 @@ type Person {
   favoriteTank: String
 }
 
+type PersonAndFavTank {
+  name: String
+  city: String
+  state: String
+  avgHoursPerWeek: Int
+  username: String
+  favoriteTank: String
+  favoriteTankStats: PlayerStats
+}
+
 type Query {
   persons(
     name: String
     username: String
   ): [Person]
-  players(nickname: String!): [Player]
+
   getPlayerFavTankStats(
     name: String!
     username: String!
     favoriteTank: String!
   ): PlayerStats
 
+  getPersonsAndFavTank(
+  name: String
+  username: String
+  ): [PersonAndFavTank]
 }
 
 type Mutation {
@@ -45,16 +59,6 @@ type Mutation {
     username: String
     favoriteTank: String
   ): Person
-}
-
-type PersonAndStats {
-  Person: Person
-  PlayerStats: PlayerStats
-}
-
-type Player {
-  account_id: Int,
-  nickname: String!,
 }
 
 type PlayerStats {
