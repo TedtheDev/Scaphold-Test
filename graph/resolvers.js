@@ -78,9 +78,6 @@ const resolverMap = {
         })
         .catch((err) => { reject(err);})
       })
-    },
-    getPlayerAndStats(_, args) {
-
     }
   },
   Mutation: {

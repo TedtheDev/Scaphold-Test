@@ -19,10 +19,7 @@ type Query {
     username: String!
     favoriteTank: String!
   ): PlayerStats
-  getPlayerAndStats(
-    persons
-    getPlayerFavTankStats
-  ): PersonAndStats
+
 }
 
 type Mutation {
