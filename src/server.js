@@ -32,10 +32,19 @@ const MySchema = makeExecutableSchema({
  */
 const app = express();
 
+app.get('/',(req,res)=> {
+  res.redirect('/graphql')
+})
+
 app.use('/graphql', graphqlHTTP({
   schema: MySchema,
   graphiql: true
 }));
+
+app.get('*',(req,res)=> {
+  res.redirect('/graphql')
+})
+
 app.listen(server_port, () => {
   console.log(`App listening on port: ${server_port}`);
 });

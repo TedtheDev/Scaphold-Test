@@ -1,12 +1,14 @@
 {
-  "name": "ds-meetup",
+  "name": "wargaming-api-graphql",
   "version": "1.0.0",
-  "description": "Simple GraphQL server tutorial for the ds meetup at Pivotal",
+  "description": "GraphQL Server for Wargaming API",
   "main": "index.js",
+  "engines": {
+    "node": "8.1.4",
+    "npm": "5.0.1"
+  },
   "tags": [
     "graphql",
-    "tutorial",
-    "starter-kit",
     "nodejs"
   ],
   "scripts": {
@@ -14,7 +16,7 @@
     "_start": "node --harmonay src/server.js",
     "start": "nodemon --exec \"babel-node ./src/server.js --presets es2015\""
   },
-  "author": "Michael Paris",
+  "author": "Tyler Edmunds",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.16.1",
